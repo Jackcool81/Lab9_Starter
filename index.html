@@ -50,6 +50,14 @@
 </head>
 
 <body>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "e56af47ae13348c8820a07b99f4f8525"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
+                        
   <main>
     <form>
       <fieldset>
@@ -88,20 +96,136 @@
   </main>
 
   <script>
+    
+                        
+    class InputError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "ValidationError";
+      }
+    }
+
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
-      e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        e.preventDefault();
+        let output = document.querySelector('output');
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        let operator = document.querySelector('#operator').value;
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch(err){
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        if(isNaN(firstNum) || isNaN(secondNum)){
+          throw new InputError("At least one input is not a number");
+        }
+        else {
+          console.error(err.message);
+        }
+      }
+      finally {
+        console.log("Calculator output");
+      }
+
     });
 
+    
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    let consoleLogButton = document.querySelectorAll("section button");
+    consoleLogButton[0].addEventListener('click', () => {
+      console.log("Console Logged");
+    });
+    consoleLogButton[1].addEventListener('click', () => {
+      console.error("Console Errored");
+    });
+    consoleLogButton[2].addEventListener('click', () => {
+      console.count();
+    });
+    consoleLogButton[3].addEventListener('click', () => {
+      console.warn("Console Warned");
+    });
+    consoleLogButton[4].addEventListener('click', () => {
+      var ten = 10;
+      var twenty = 20;
+      var justify = '10 is not eqaul to 20';
+      console.assert(ten == twenty, {ten, twenty, justify});
+    });
+    consoleLogButton[5].addEventListener('click', () => {
+      console.clear();
+    });
+    consoleLogButton[6].addEventListener('click', () => {
+      console.dir(consoleLogButton);
+    });
+    consoleLogButton[7].addEventListener('click', () => {
+      console.dirxml(document);
+    });
+    const label = 'Adolescent Irradiated Espionage Tortoises';
+
+    consoleLogButton[8].addEventListener('click', () => {
+      console.group(label);
+     
+    });
+  
+    consoleLogButton[9].addEventListener('click', () => {
+      console.groupEnd(label);
+    });
+
+
+    consoleLogButton[10].addEventListener('click', () => {
+      var people = [
+      {
+        first: 'René',
+        last: 'Magritte',
+      },
+      {
+        first: 'Chaim',
+        last: 'Soutine',
+        birthday: '18930113',
+      },
+      {
+        first: 'Henri',
+        last: 'Matisse',
+      }
+    ];
+      console.table(people);
+    });
+
+    consoleLogButton[11].addEventListener('click', () => {
+      console.time();
+    });
+
+    consoleLogButton[12].addEventListener('click', () => {
+      console.timeEnd();
+     
+    });
+  
+    consoleLogButton[13].addEventListener('click', () => {
+      console.trace();
+    });
+
+
+    consoleLogButton[14].addEventListener('click', () => {
+      explosion; //Bad Code on purpose
+     
+    });
+
+    
+
+
+    
+    window.onerror = function(message, url, linenumber) {
+	    console.log('ERROR! ' + message + ' on ' + linenumber + ' for ' + url);
+    }
+  
+
+  
+
   </script>
 </body>
 
